@@ -874,14 +874,6 @@ dependencies = [
 ]
 
 [[package]]
-name = "build_helpers"
-version = "0.14.0"
-source = "git+https://github.com/pop-os/libcosmic#d921602cde8248c070b493ce43b0edd388e19b9a"
-dependencies = [
- "cfg_aliases",
-]
-
-[[package]]
 name = "built"
 version = "0.8.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -1461,7 +1453,7 @@ name = "cosmic-bg-config"
 version = "1.0.3"
 source = "git+https://github.com/pop-os/cosmic-bg#ed65f7d3dc9e3d4af3cd65244a966e01bff0f730"
 dependencies = [
- "cosmic-config 1.0.0 (git+https://github.com/pop-os/libcosmic)",
+ "cosmic-config",
  "derive_setters",
  "image",
  "serde",
@@ -1500,11 +1492,11 @@ version = "1.0.0"
 source = "git+https://github.com/hahnavi/libcosmic.git?rev=a370eb67a23470dd5de584c9905f2af31f17287f#a370eb67a23470dd5de584c9905f2af31f17287f"
 dependencies = [
  "atomicwrites",
- "cosmic-config-derive 1.0.0 (git+https://github.com/hahnavi/libcosmic.git?rev=a370eb67a23470dd5de584c9905f2af31f17287f)",
+ "cosmic-config-derive",
  "cosmic-settings-daemon",
  "dirs 6.0.0",
  "futures-util",
- "iced_futures 0.14.0 (git+https://github.com/hahnavi/libcosmic.git?rev=a370eb67a23470dd5de584c9905f2af31f17287f)",
+ "iced_futures",
  "known-folders",
  "notify",
  "ron 0.12.2",
@@ -1516,35 +1508,9 @@ dependencies = [
 ]
 
 [[package]]
-name = "cosmic-config"
-version = "1.0.0"
-source = "git+https://github.com/pop-os/libcosmic#d921602cde8248c070b493ce43b0edd388e19b9a"
-dependencies = [
- "atomicwrites",
- "cosmic-config-derive 1.0.0 (git+https://github.com/pop-os/libcosmic)",
- "dirs 6.0.0",
- "iced_futures 0.14.0 (git+https://github.com/pop-os/libcosmic)",
- "known-folders",
- "notify",
- "ron 0.12.2",
- "serde",
- "tracing",
- "xdg",
-]
-
-[[package]]
 name = "cosmic-config-derive"
 version = "1.0.0"
 source = "git+https://github.com/hahnavi/libcosmic.git?rev=a370eb67a23470dd5de584c9905f2af31f17287f#a370eb67a23470dd5de584c9905f2af31f17287f"
-dependencies = [
- "quote",
- "syn",
-]
-
-[[package]]
-name = "cosmic-config-derive"
-version = "1.0.0"
-source = "git+https://github.com/pop-os/libcosmic#d921602cde8248c070b493ce43b0edd388e19b9a"
 dependencies = [
  "quote",
  "syn",
@@ -1630,7 +1596,7 @@ dependencies = [
 name = "cosmic-portal-config"
 version = "0.1.0"
 dependencies = [
- "cosmic-config 1.0.0 (git+https://github.com/hahnavi/libcosmic.git?rev=a370eb67a23470dd5de584c9905f2af31f17287f)",
+ "cosmic-config",
  "log",
  "serde",
 ]
@@ -1668,7 +1634,7 @@ name = "cosmic-settings-config"
 version = "0.1.0"
 source = "git+https://github.com/pop-os/cosmic-settings-daemon#e4d2a74f5115091940f6ea09f730863f74f34758"
 dependencies = [
- "cosmic-config 1.0.0 (git+https://github.com/pop-os/libcosmic)",
+ "cosmic-config",
  "ron 0.11.0",
  "serde",
  "serde_with",
@@ -1715,7 +1681,7 @@ source = "git+https://github.com/hahnavi/libcosmic.git?rev=a370eb67a23470dd5de58
 dependencies = [
  "almost",
  "configparser",
- "cosmic-config 1.0.0 (git+https://github.com/hahnavi/libcosmic.git?rev=a370eb67a23470dd5de584c9905f2af31f17287f)",
+ "cosmic-config",
  "csscolorparser",
  "dirs 6.0.0",
  "hex_color",
@@ -3421,12 +3387,12 @@ name = "iced"
 version = "0.14.0"
 source = "git+https://github.com/hahnavi/libcosmic.git?rev=a370eb67a23470dd5de584c9905f2af31f17287f#a370eb67a23470dd5de584c9905f2af31f17287f"
 dependencies = [
- "build_helpers 0.14.0 (git+https://github.com/hahnavi/libcosmic.git?rev=a370eb67a23470dd5de584c9905f2af31f17287f)",
+ "build_helpers",
  "dnd",
  "iced_accessibility",
- "iced_core 0.14.0 (git+https://github.com/hahnavi/libcosmic.git?rev=a370eb67a23470dd5de584c9905f2af31f17287f)",
+ "iced_core",
  "iced_debug",
- "iced_futures 0.14.0 (git+https://github.com/hahnavi/libcosmic.git?rev=a370eb67a23470dd5de584c9905f2af31f17287f)",
+ "iced_futures",
  "iced_program",
  "iced_renderer",
  "iced_runtime",
@@ -3453,7 +3419,7 @@ version = "0.14.0"
 source = "git+https://github.com/hahnavi/libcosmic.git?rev=a370eb67a23470dd5de584c9905f2af31f17287f#a370eb67a23470dd5de584c9905f2af31f17287f"
 dependencies = [
  "bitflags 2.13.0",
- "build_helpers 0.14.0 (git+https://github.com/hahnavi/libcosmic.git?rev=a370eb67a23470dd5de584c9905f2af31f17287f)",
+ "build_helpers",
  "bytes",
  "cosmic-client-toolkit 0.2.0 (git+https://github.com/pop-os/cosmic-protocols?rev=c0cff4d)",
  "dnd",
@@ -3474,36 +3440,12 @@ dependencies = [
 ]
 
 [[package]]
-name = "iced_core"
-version = "0.14.0"
-source = "git+https://github.com/pop-os/libcosmic#d921602cde8248c070b493ce43b0edd388e19b9a"
-dependencies = [
- "bitflags 2.13.0",
- "build_helpers 0.14.0 (git+https://github.com/pop-os/libcosmic)",
- "bytes",
- "dnd",
- "glam",
- "lilt",
- "log",
- "mime 0.1.0",
- "num-traits",
- "palette",
- "raw-window-handle",
- "rustc-hash 2.1.3",
- "smol_str",
- "thiserror 2.0.18",
- "unicode-segmentation",
- "web-time",
- "window_clipboard",
-]
-
-[[package]]
 name = "iced_debug"
 version = "0.14.0"
 source = "git+https://github.com/hahnavi/libcosmic.git?rev=a370eb67a23470dd5de584c9905f2af31f17287f#a370eb67a23470dd5de584c9905f2af31f17287f"
 dependencies = [
- "iced_core 0.14.0 (git+https://github.com/hahnavi/libcosmic.git?rev=a370eb67a23470dd5de584c9905f2af31f17287f)",
- "iced_futures 0.14.0 (git+https://github.com/hahnavi/libcosmic.git?rev=a370eb67a23470dd5de584c9905f2af31f17287f)",
+ "iced_core",
+ "iced_futures",
  "log",
 ]
 
@@ -3513,23 +3455,10 @@ version = "0.14.0"
 source = "git+https://github.com/hahnavi/libcosmic.git?rev=a370eb67a23470dd5de584c9905f2af31f17287f#a370eb67a23470dd5de584c9905f2af31f17287f"
 dependencies = [
  "futures",
- "iced_core 0.14.0 (git+https://github.com/hahnavi/libcosmic.git?rev=a370eb67a23470dd5de584c9905f2af31f17287f)",
+ "iced_core",
  "log",
  "rustc-hash 2.1.3",
  "tokio",
- "wasm-bindgen-futures",
- "wasmtimer",
-]
-
-[[package]]
-name = "iced_futures"
-version = "0.14.0"
-source = "git+https://github.com/pop-os/libcosmic#d921602cde8248c070b493ce43b0edd388e19b9a"
-dependencies = [
- "futures",
- "iced_core 0.14.0 (git+https://github.com/pop-os/libcosmic)",
- "log",
- "rustc-hash 2.1.3",
  "wasm-bindgen-futures",
  "wasmtimer",
 ]
@@ -3543,8 +3472,8 @@ dependencies = [
  "bytemuck",
  "cosmic-text",
  "half",
- "iced_core 0.14.0 (git+https://github.com/hahnavi/libcosmic.git?rev=a370eb67a23470dd5de584c9905f2af31f17287f)",
- "iced_futures 0.14.0 (git+https://github.com/hahnavi/libcosmic.git?rev=a370eb67a23470dd5de584c9905f2af31f17287f)",
+ "iced_core",
+ "iced_futures",
  "image",
  "kamadak-exif",
  "log",
@@ -3581,12 +3510,12 @@ name = "iced_runtime"
 version = "0.14.0"
 source = "git+https://github.com/hahnavi/libcosmic.git?rev=a370eb67a23470dd5de584c9905f2af31f17287f#a370eb67a23470dd5de584c9905f2af31f17287f"
 dependencies = [
- "build_helpers 0.14.0 (git+https://github.com/hahnavi/libcosmic.git?rev=a370eb67a23470dd5de584c9905f2af31f17287f)",
+ "build_helpers",
  "bytes",
  "cosmic-client-toolkit 0.2.0 (git+https://github.com/pop-os/cosmic-protocols?rev=c0cff4d)",
  "dnd",
- "iced_core 0.14.0 (git+https://github.com/hahnavi/libcosmic.git?rev=a370eb67a23470dd5de584c9905f2af31f17287f)",
- "iced_futures 0.14.0 (git+https://github.com/hahnavi/libcosmic.git?rev=a370eb67a23470dd5de584c9905f2af31f17287f)",
+ "iced_core",
+ "iced_futures",
  "raw-window-handle",
  "thiserror 2.0.18",
  "window_clipboard",
@@ -3616,7 +3545,7 @@ source = "git+https://github.com/hahnavi/libcosmic.git?rev=a370eb67a23470dd5de58
 dependencies = [
  "as-raw-xcb-connection",
  "bitflags 2.13.0",
- "build_helpers 0.14.0 (git+https://github.com/hahnavi/libcosmic.git?rev=a370eb67a23470dd5de584c9905f2af31f17287f)",
+ "build_helpers",
  "bytemuck",
  "cosmic-client-toolkit 0.2.0 (git+https://github.com/pop-os/cosmic-protocols?rev=c0cff4d)",
  "cryoglyph",
@@ -3646,7 +3575,7 @@ name = "iced_widget"
 version = "0.14.2"
 source = "git+https://github.com/hahnavi/libcosmic.git?rev=a370eb67a23470dd5de584c9905f2af31f17287f#a370eb67a23470dd5de584c9905f2af31f17287f"
 dependencies = [
- "build_helpers 0.14.0 (git+https://github.com/hahnavi/libcosmic.git?rev=a370eb67a23470dd5de584c9905f2af31f17287f)",
+ "build_helpers",
  "cosmic-client-toolkit 0.2.0 (git+https://github.com/pop-os/cosmic-protocols?rev=c0cff4d)",
  "dnd",
  "iced_renderer",
@@ -3665,12 +3594,12 @@ name = "iced_winit"
 version = "0.14.0"
 source = "git+https://github.com/hahnavi/libcosmic.git?rev=a370eb67a23470dd5de584c9905f2af31f17287f#a370eb67a23470dd5de584c9905f2af31f17287f"
 dependencies = [
- "build_helpers 0.14.0 (git+https://github.com/hahnavi/libcosmic.git?rev=a370eb67a23470dd5de584c9905f2af31f17287f)",
+ "build_helpers",
  "cosmic-client-toolkit 0.2.0 (git+https://github.com/pop-os/cosmic-protocols?rev=c0cff4d)",
  "cursor-icon",
  "dnd",
  "iced_debug",
- "iced_futures 0.14.0 (git+https://github.com/hahnavi/libcosmic.git?rev=a370eb67a23470dd5de584c9905f2af31f17287f)",
+ "iced_futures",
  "iced_graphics",
  "iced_program",
  "iced_runtime",
@@ -4784,9 +4713,9 @@ dependencies = [
  "apply",
  "ashpd 0.12.3",
  "auto_enums",
- "build_helpers 0.14.0 (git+https://github.com/hahnavi/libcosmic.git?rev=a370eb67a23470dd5de584c9905f2af31f17287f)",
+ "build_helpers",
  "cosmic-client-toolkit 0.2.0 (git+https://github.com/pop-os/cosmic-protocols?rev=32283d7)",
- "cosmic-config 1.0.0 (git+https://github.com/hahnavi/libcosmic.git?rev=a370eb67a23470dd5de584c9905f2af31f17287f)",
+ "cosmic-config",
  "cosmic-freedesktop-icons",
  "cosmic-settings-config",
  "cosmic-settings-daemon",
@@ -4800,8 +4729,8 @@ dependencies = [
  "i18n-embed",
  "i18n-embed-fl",
  "iced",
- "iced_core 0.14.0 (git+https://github.com/hahnavi/libcosmic.git?rev=a370eb67a23470dd5de584c9905f2af31f17287f)",
- "iced_futures 0.14.0 (git+https://github.com/hahnavi/libcosmic.git?rev=a370eb67a23470dd5de584c9905f2af31f17287f)",
+ "iced_core",
+ "iced_futures",
  "iced_renderer",
  "iced_runtime",
  "iced_wgpu",
@@ -9331,7 +9260,7 @@ dependencies = [
  "clap",
  "cosmic-bg-config",
  "cosmic-client-toolkit 0.2.0 (git+https://github.com/pop-os/cosmic-protocols?rev=32283d7)",
- "cosmic-config 1.0.0 (git+https://github.com/hahnavi/libcosmic.git?rev=a370eb67a23470dd5de584c9905f2af31f17287f)",
+ "cosmic-config",
  "cosmic-files",
  "cosmic-portal-config",
  "cosmic-protocols 0.2.0 (git+https://github.com/pop-os/cosmic-protocols?rev=32283d7)",
