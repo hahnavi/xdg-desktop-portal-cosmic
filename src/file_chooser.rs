@@ -23,7 +23,6 @@ type Filters = Vec<Filter>;
 #[zvariant(signature = "a{sv}")]
 pub struct OpenFileOptions {
     accept_label: Option<String>,
-    #[allow(dead_code)]
     modal: Option<bool>,
     multiple: Option<bool>,
     directory: Option<bool>,
@@ -37,7 +36,6 @@ pub struct OpenFileOptions {
 #[zvariant(signature = "a{sv}")]
 pub struct SaveFileOptions {
     accept_label: Option<String>,
-    #[allow(dead_code)]
     modal: Option<bool>,
     filters: Option<Filters>,
     current_filter: Option<Filter>,
@@ -52,7 +50,6 @@ pub struct SaveFileOptions {
 #[zvariant(signature = "a{sv}")]
 pub struct SaveFilesOptions {
     accept_label: Option<String>,
-    #[allow(dead_code)]
     modal: Option<bool>,
     choices: Option<Choices>,
     current_folder: Option<Vec<u8>>,
@@ -100,7 +97,6 @@ impl FileChooserOptions {
         }
     }
 
-    #[allow(dead_code)]
     fn modal(&self) -> bool {
         // Defaults to true
         match self {
@@ -247,7 +243,6 @@ pub(crate) struct Args {
     pub handle: zvariant::ObjectPath<'static>,
     #[allow(dead_code)]
     pub app_id: String,
-    #[allow(dead_code)]
     pub parent_window: String,
     pub title: String,
     pub options: FileChooserOptions,
@@ -258,6 +253,9 @@ fn map_msg(id: window::Id, message: cosmic::Action<Msg>) -> cosmic::Action<AppMs
     match message {
         cosmic::Action::App(msg) => cosmic::Action::App(AppMsg::FileChooser(id, msg)),
         cosmic::Action::Cosmic(cosmic_message) => cosmic::Action::Cosmic(cosmic_message),
+        cosmic::Action::Surface(action) => {
+            cosmic::Action::Surface(action.map(move |msg| AppMsg::FileChooser(id, msg)))
+        }
         cosmic::Action::None => cosmic::Action::None,
     }
 }
@@ -428,10 +426,13 @@ pub fn update_args(portal: &mut CosmicPortal, args: Args) -> cosmic::Task<cosmic
             DialogKind::OpenFolder
         }
     };
-    let mut settings = DialogSettings::new().kind(kind);
+    let mut settings = DialogSettings::new().kind(kind).modal(args.options.modal());
     //TODO: setting app_id breaks dialog floating: .app_id(args.app_id.clone());
     if let Some(path) = args.options.current_folder() {
         settings = settings.path(path);
+    }
+    if !args.parent_window.is_empty() {
+        settings = settings.parent(Some(args.parent_window.clone()));
     }
 
     let (mut dialog, command) = Dialog::new(settings, Msg::DialogMessage, Msg::DialogResult);

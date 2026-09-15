@@ -15,7 +15,7 @@ members = ["cosmic-portal-config"]
 [dependencies]
 anyhow = "1.0.102"
 ashpd = "0.12"
-cosmic-files = { git = "https://github.com/pop-os/cosmic-files", default-features = false, features = [
+cosmic-files = { git = "https://github.com/hahnavi/cosmic-files.git", rev = "23e51871145e00bfbc7bb95edca47f26c224ba67", default-features = false, features = [
     "gvfs",
     "wayland",
 ] }
@@ -61,7 +61,8 @@ tracing-subscriber = "0.3.23"
 log-panics = { version = "2.1.0", features = ["with-backtrace"] }
 
 [dependencies.libcosmic]
-git = "https://github.com/pop-os/libcosmic"
+git = "https://github.com/hahnavi/libcosmic.git"
+rev = "a370eb67a23470dd5de584c9905f2af31f17287f"
 # TODO: a11y feature crashes file chooser dialog
 default-features = false
 features = [
@@ -76,7 +77,7 @@ features = [
 ]
 
 [workspace.dependencies]
-cosmic-config = { git = "https://github.com/pop-os/libcosmic" }
+cosmic-config = { git = "https://github.com/hahnavi/libcosmic.git", rev = "a370eb67a23470dd5de584c9905f2af31f17287f" }
 log = "0.4.29"
 serde = "1.0.228"
 
