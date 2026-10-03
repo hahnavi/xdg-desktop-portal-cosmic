@@ -5,8 +5,8 @@ edition = "2024"
 license = "GPL-3.0-or-later"
 
 [features]
-default = ["systemd"]
-wgpu = ["libcosmic/wgpu"]
+default = ["systemd", "wgpu"]
+wgpu = ["cosmic-files/wgpu"]
 systemd = ["dep:tracing-journald"]
 
 [workspace]
@@ -15,15 +15,15 @@ members = ["cosmic-portal-config"]
 [dependencies]
 anyhow = "1.0.102"
 ashpd = "0.12"
-cosmic-files = { git = "https://github.com/hahnavi/cosmic-files.git", rev = "23e51871145e00bfbc7bb95edca47f26c224ba67", default-features = false, features = [
+cosmic-files = { git = "https://github.com/hahnavi/cosmic-files", branch = "hahnavi", default-features = false, features = [
     "gvfs",
     "wayland",
 ] }
-cosmic-protocols = { git = "https://github.com/pop-os/cosmic-protocols", rev = "32283d7" }
-cosmic-client-toolkit = { git = "https://github.com/pop-os/cosmic-protocols", rev = "32283d7" }
+cosmic-protocols = { git = "https://github.com/hahnavi/cosmic-protocols", branch = "hahnavi" }
+cosmic-client-toolkit = { git = "https://github.com/hahnavi/cosmic-protocols", branch = "hahnavi" }
 futures = "0.3"
 image = "0.25"
-cosmic-bg-config = { git = "https://github.com/pop-os/cosmic-bg" }
+cosmic-bg-config = { git = "https://github.com/hahnavi/cosmic-bg", branch = "hahnavi" }
 cosmic-portal-config = { path = "./cosmic-portal-config" }
 memmap2 = "0.9.10"
 # pipewire = { git = "https://github.com/pop-os/pipewire-rs" }
@@ -61,7 +61,8 @@ tracing-subscriber = "0.3.23"
 log-panics = { version = "2.1.0", features = ["with-backtrace"] }
 
 [dependencies.libcosmic]
-git = "https://github.com/pop-os/libcosmic"
+git = "https://github.com/hahnavi/libcosmic"
+branch = "hahnavi"
 # TODO: a11y feature crashes file chooser dialog
 default-features = false
 features = [
@@ -76,7 +77,7 @@ features = [
 ]
 
 [workspace.dependencies]
-cosmic-config = { git = "https://github.com/pop-os/libcosmic" }
+cosmic-config = { git = "https://github.com/hahnavi/libcosmic", branch = "hahnavi" }
 log = "0.4.29"
 serde = "1.0.228"
 
@@ -84,10 +85,7 @@ serde = "1.0.228"
 gst = { package = "gstreamer", version = "0.25.1" }
 clap = { version = "4.6.1", features = ["derive"] }
 
-# [patch."https://github.com/pop-os/libcosmic"]
-# libcosmic = { git = "https://github.com/pop-os/libcosmic//", branch = "theme-v2" }
-# cosmic-config = { git = "https://github.com/pop-os/libcosmic//", branch = "theme-v2" }
-# iced_futures = { git = "https://github.com/pop-os/libcosmic//", branch = "theme-v2" }
+# [patch."https://github.com/hahnavi/libcosmic"]
 # libcosmic = { path = "../libcosmic" }
 # cosmic-config = { path = "../libcosmic/cosmic-config" }
 # cosmic-theme = { path = "../libcosmic/cosmic-theme" }
@@ -95,10 +93,3 @@ clap = { version = "4.6.1", features = ["derive"] }
 [profile.release]
 opt-level = 3
 lto = "thin"
-
-# cosmic-bg-config pulls cosmic-config from pop-os/libcosmic; use the fork
-# for the whole graph so there is a single CosmicConfigEntry trait.
-[patch."https://github.com/pop-os/libcosmic"]
-libcosmic = { git = "https://github.com/hahnavi/libcosmic.git", rev = "a370eb67a23470dd5de584c9905f2af31f17287f" }
-cosmic-config = { git = "https://github.com/hahnavi/libcosmic.git", rev = "a370eb67a23470dd5de584c9905f2af31f17287f" }
-cosmic-theme = { git = "https://github.com/hahnavi/libcosmic.git", rev = "a370eb67a23470dd5de584c9905f2af31f17287f" }
