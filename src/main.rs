@@ -16,6 +16,7 @@ mod buffer;
 mod documents;
 mod file_chooser;
 mod localize;
+mod panic_hook;
 mod remote_desktop;
 mod remote_desktop_dialog;
 mod remote_desktop_ei;
@@ -362,7 +363,7 @@ fn main() -> cosmic::iced::Result {
         .try_init()
         .unwrap();
 
-    log_panics::init();
+    panic_hook::init();
 
     localize::localize();
 

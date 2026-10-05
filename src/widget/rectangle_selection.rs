@@ -489,61 +489,6 @@ impl<Msg: 'static + Clone> Widget<Msg, cosmic::Theme, cosmic::Renderer>
         let Some(clipped_inner_rect) = inner_rect.intersection(&outer_rect) else {
             return;
         };
-        #[cfg(feature = "wgpu")]
-        {
-            use cosmic::iced::advanced::graphics::Mesh;
-            use cosmic::iced::advanced::graphics::color::pack;
-            use cosmic::iced::advanced::graphics::mesh::{Indexed, Renderer, SolidVertex2D};
-            use cosmic::iced::core::Transformation;
-            let mut overlay = Color::BLACK;
-            overlay.a = 0.3;
-
-            let outer_bottom_right = (outer_size.width, outer_size.height);
-            let inner_top_left = (inner_rect.x, inner_rect.y);
-            let outer_top_left = (outer_rect.x, outer_rect.y);
-            let inner_bottom_right = (
-                inner_rect.x + inner_rect.width,
-                inner_rect.y + inner_rect.height,
-            );
-            let vertices = vec![
-                outer_top_left,
-                (outer_bottom_right.0, outer_top_left.1),
-                outer_bottom_right,
-                (outer_top_left.0, outer_bottom_right.1),
-                inner_top_left,
-                (inner_bottom_right.0, inner_top_left.1),
-                inner_bottom_right,
-                (inner_top_left.0, inner_bottom_right.1),
-            ];
-            // build 8 triangles around the selected region
-            #[rustfmt::skip]
-            let indices = vec![
-                5, 2, 1,
-                5, 6, 2,
-                6, 4, 2,
-                6, 8, 4,
-                8, 3, 4,
-                8, 7, 3,
-                7, 1, 3,
-                7, 5, 1,
-            ];
-
-            renderer.draw_mesh(Mesh::Solid {
-                buffers: Indexed {
-                    vertices: vertices
-                        .into_iter()
-                        .map(|v| SolidVertex2D {
-                            position: [v.0, v.1],
-                            color: pack(overlay),
-                        })
-                        .collect(),
-                    indices,
-                },
-                transformation: Transformation::IDENTITY,
-                clip_bounds: Rectangle::INFINITE,
-            })
-        }
-
         let translated_clipped_inner_rect = Rectangle::new(
             Point::new(
                 clipped_inner_rect.x - outer_rect.x,
@@ -551,6 +496,50 @@ impl<Msg: 'static + Clone> Widget<Msg, cosmic::Theme, cosmic::Renderer>
             ),
             clipped_inner_rect.size(),
         );
+
+        let mut overlay = Color::BLACK;
+        overlay.a = 0.3;
+        let selection_bottom =
+            translated_clipped_inner_rect.y + translated_clipped_inner_rect.height;
+        let selection_right = translated_clipped_inner_rect.x + translated_clipped_inner_rect.width;
+        let overlay_rects = [
+            Rectangle::new(
+                Point::ORIGIN,
+                Size::new(outer_size.width, translated_clipped_inner_rect.y),
+            ),
+            Rectangle::new(
+                Point::new(0.0, selection_bottom),
+                Size::new(outer_size.width, outer_size.height - selection_bottom),
+            ),
+            Rectangle::new(
+                Point::new(0.0, translated_clipped_inner_rect.y),
+                Size::new(
+                    translated_clipped_inner_rect.x,
+                    translated_clipped_inner_rect.height,
+                ),
+            ),
+            Rectangle::new(
+                Point::new(selection_right, translated_clipped_inner_rect.y),
+                Size::new(
+                    outer_size.width - selection_right,
+                    translated_clipped_inner_rect.height,
+                ),
+            ),
+        ];
+        for bounds in overlay_rects {
+            let quad = Quad {
+                bounds,
+                border: Border {
+                    radius: 0.0.into(),
+                    width: 0.0,
+                    color: Color::TRANSPARENT,
+                },
+                shadow: Shadow::default(),
+                snap: true,
+            };
+            renderer.fill_quad(quad, overlay);
+        }
+
         let quad = Quad {
             bounds: translated_clipped_inner_rect,
             border: Border {

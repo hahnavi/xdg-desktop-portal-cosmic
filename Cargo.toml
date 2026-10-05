@@ -6,39 +6,40 @@ license = "GPL-3.0-or-later"
 
 [features]
 default = ["systemd", "wgpu"]
-wgpu = ["cosmic-files/wgpu"]
+wgpu = ["cosmic-files/wgpu", "libcosmic/wgpu"]
+tiny-skia = ["cosmic-files/tiny-skia", "libcosmic/tiny-skia"]
 systemd = ["dep:tracing-journald"]
 
 [workspace]
 members = ["cosmic-portal-config"]
 
 [dependencies]
-anyhow = "1.0.102"
-ashpd = "0.12"
+anyhow = "1.0.104"
+ashpd = { version = "0.13.13", features = ["screencast"] }
 cosmic-files = { git = "https://github.com/hahnavi/cosmic-files", branch = "hahnavi", default-features = false, features = [
     "gvfs",
+    "image-common",
     "wayland",
 ] }
-cosmic-protocols = { git = "https://github.com/hahnavi/cosmic-protocols", branch = "hahnavi" }
 cosmic-client-toolkit = { git = "https://github.com/hahnavi/cosmic-protocols", branch = "hahnavi" }
-futures = "0.3"
-image = "0.25"
+futures = "0.3.34"
+image = { version = "0.25.10", default-features = false }
 cosmic-bg-config = { git = "https://github.com/hahnavi/cosmic-bg", branch = "hahnavi" }
 cosmic-portal-config = { path = "./cosmic-portal-config" }
-memmap2 = "0.9.10"
+memmap2 = "0.9.11"
 # pipewire = { git = "https://github.com/pop-os/pipewire-rs" }
 pipewire = { git = "https://gitlab.freedesktop.org/pipewire/pipewire-rs", features = [
     "v0_3_33",
 ] }
 png = "0.18"
 reis = { version = "0.7", features = ["tokio"] }
-rustix = { version = "1.1", features = ["fs", "time"] }
+rustix = { version = "1.1.5", features = ["fs", "time"] }
 # spa_sys = { package = "libspa-sys", git = "https://github.com/pop-os/pipewire-rs" }
-zbus = { version = "5.15.0", default-features = false, features = ["tokio"] }
+zbus = { version = "5.19.0", default-features = false, features = ["tokio"] }
 gbm = "0.18.0"
 wayland-protocols = "0.32.12"
-dirs = "6.0.0"
-jiff = "0.2"
+dirs = "7.0.0"
+jiff = "0.2.37"
 url = "2.5"
 # i18n
 i18n-embed = { version = "0.16", features = [
@@ -53,12 +54,12 @@ serde.workspace = true
 spa_sys = { package = "libspa-sys", git = "https://gitlab.freedesktop.org/pipewire/pipewire-rs" }
 pipewire-sys = { git = "https://gitlab.freedesktop.org/pipewire/pipewire-rs" }
 tempfile = "3.27.0"
-tokio = { version = "1.52.1", features = ["macros", "net", "rt", "sync"] }
-wayland-client = { version = "0.31.14" }
+tokio = { version = "1.53.2", features = ["macros", "net", "rt", "sync"] }
+wayland-client = { version = "0.31.15" }
 tracing = "0.1.44"
 tracing-journald = { version = "0.3.2", optional = true }
 tracing-subscriber = "0.3.23"
-log-panics = { version = "2.1.0", features = ["with-backtrace"] }
+log.workspace = true
 
 [dependencies.libcosmic]
 git = "https://github.com/hahnavi/libcosmic"
@@ -72,7 +73,6 @@ features = [
     "multi-window",
     "tokio",
     "wayland",
-    "wgpu",
     "winit",
 ]
 
@@ -82,13 +82,46 @@ log = "0.4.29"
 serde = "1.0.228"
 
 [dev-dependencies]
-gst = { package = "gstreamer", version = "0.25.1" }
-clap = { version = "4.6.1", features = ["derive"] }
+gst = { package = "gstreamer", version = "0.25.4" }
+clap = { version = "4.6.7", features = ["derive"] }
 
 # [patch."https://github.com/hahnavi/libcosmic"]
 # libcosmic = { path = "../libcosmic" }
 # cosmic-config = { path = "../libcosmic/cosmic-config" }
 # cosmic-theme = { path = "../libcosmic/cosmic-theme" }
+
+# [patch."https://github.com/hahnavi/cosmic-files"]
+# cosmic-files = { path = "../cosmic-files" }
+
+[patch."https://github.com/pop-os/libcosmic"]
+# build_helpers = { git = "https://github.com/hahnavi/libcosmic", branch = "hahnavi" }
+# cosmic-config = { git = "https://github.com/hahnavi/libcosmic", branch = "hahnavi" }
+# cosmic-config-derive = { git = "https://github.com/hahnavi/libcosmic", branch = "hahnavi" }
+# iced_core = { git = "https://github.com/hahnavi/libcosmic", branch = "hahnavi" }
+# iced_futures = { git = "https://github.com/hahnavi/libcosmic", branch = "hahnavi" }
+build_helpers = { path = "../libcosmic/iced/build_helpers" }
+cosmic-config = { path = "../libcosmic/cosmic-config" }
+cosmic-config-derive = { path = "../libcosmic/cosmic-config-derive" }
+iced_core = { path = "../libcosmic/iced/core" }
+iced_futures = { path = "../libcosmic/iced/futures" }
+
+[patch."https://github.com/pop-os/window_clipboard"]
+# window_clipboard = { git = "https://github.com/hahnavi/window_clipboard", branch = "hahnavi" }
+# dnd = { git = "https://github.com/hahnavi/window_clipboard", branch = "hahnavi" }
+# mime = { git = "https://github.com/hahnavi/window_clipboard", branch = "hahnavi" }
+window_clipboard = { path = "../window-clipboard" }
+dnd = { path = "../window-clipboard/dnd" }
+mime = { path = "../window-clipboard/mime" }
+
+[patch."https://github.com/pop-os/cosmic-protocols"]
+cosmic-protocols = { git = "https://github.com/hahnavi/cosmic-protocols", branch = "hahnavi" }
+cosmic-client-toolkit = { git = "https://github.com/hahnavi/cosmic-protocols", branch = "hahnavi" }
+# cosmic-protocols = { path = "../cosmic-protocols" }
+# cosmic-client-toolkit = { path = "../cosmic-protocols/client-toolkit" }
+
+# [patch."https://github.com/hahnavi/cosmic-protocols"]
+# cosmic-protocols = { path = "../cosmic-protocols" }
+# cosmic-client-toolkit = { path = "../cosmic-protocols/client-toolkit" }
 
 [profile.release]
 opt-level = 3
